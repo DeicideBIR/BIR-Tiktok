@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123c35">
+  <title>CreatorTax PH — TikTok Tax Calculator</title>
+  <meta name="description" content="A bilingual, educational Philippine tax estimator for TikTok affiliates and TikTok Shop sellers.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="brand"><span class="brand-mark">₱</span><div><strong>CreatorTax PH</strong><small>Tax estimates for creators & sellers</small></div></div>
+  <div class="header-actions"><button id="langToggle" class="button button-quiet" type="button">Filipino</button><button class="button button-outline" type="button" onclick="window.print()" data-i18n="print">Print report</button></div>
+</header>
+<main class="container">
+  <section class="hero">
+    <div class="eyebrow" data-i18n="eyebrow">PHILIPPINES · TAX YEAR 2026</div>
+    <h1 data-i18n="headline">Know your numbers.<br><span>Plan your taxes.</span></h1>
+    <p data-i18n="intro">Estimate your business income tax and marketplace withholding separately. This free tool is educational and is not an official BIR assessment.</p>
+    <div class="hero-tags"><span>✓ <span data-i18n="tag1">Affiliate commissions</span></span><span>✓ <span data-i18n="tag2">TikTok Shop sales</span></span><span>✓ <span data-i18n="tag3">English / Filipino</span></span></div>
+  </section>
+
+  <div class="notice" role="note"><strong data-i18n="important">Important:</strong> <span data-i18n="notice">Withholding tax is generally a tax credit, not automatically your final income tax. Results depend on your registration, other income, deductions, VAT status, and current BIR rules.</span></div>
+
+  <section class="calculator-grid">
+    <form id="taxForm" class="panel form-panel">
+      <div class="section-heading"><div><span class="step">01</span><h2 data-i18n="yourDetails">Your details</h2></div><span class="muted" data-i18n="annualEstimate">Annual estimate</span></div>
+
+      <label for="role" data-i18n="role">How do you earn on TikTok?</label>
+      <select id="role">
+        <option value="affiliate" data-i18n="affiliate">Affiliate / creator commissions</option>
+        <option value="seller" data-i18n="seller">TikTok Shop seller</option>
+        <option value="both" data-i18n="both">Both affiliate and seller</option>
+      </select>
+
+      <label for="regime" data-i18n="taxRegime">Income tax method (select only if eligible)</label>
+      <select id="regime">
+        <option value="graduated" data-i18n="graduated">Graduated income tax rates</option>
+        <option value="eight" data-i18n="eight">8% option (eligible non-VAT individual)</option>
+      </select>
+      <p class="field-help" data-i18n="regimeHelp">The 8% option is not available to everyone. It generally requires a qualified individual taxpayer, gross sales/receipts within the VAT threshold, and a valid election. Mixed-income cases need special handling.</p>
+
+      <div class="field-row">
+        <div><label for="vat" data-i18n="vatStatus">VAT status</label><select id="vat"><option value="nonvat" data-i18n="nonVat">Non-VAT</option><option value="vat" data-i18n="vatRegistered">VAT-registered</option><option value="unknown" data-i18n="unsure">Not sure</option></select></div>
+        <div><label for="mixed" data-i18n="otherIncome">Salary / other income?</label><select id="mixed"><option value="no" data-i18n="no">No — business only</option><option value="yes" data-i18n="yes">Yes — mixed income</option></select></div>
+      </div>
+
+      <div class="section-heading subsection"><div><span class="step">02</span><h2 data-i18n="incomeCosts">Income & costs</h2></div></div>
+      <label for="gross" data-i18n="grossIncome">Annual gross business income (₱)</label>
+      <input id="gross" type="number" min="0" step="0.01" value="600000" inputmode="decimal" required>
+      <p class="field-help" data-i18n="grossHelp">Affiliate: commissions/other business receipts. Seller: use a consistent sales/receipts figure for your chosen tax method, not just the bank payout. Don't subtract costs twice.</p>
+      <label for="expenses" data-i18n="expenses">Annual allowable business expenses (₱)</label>
+      <input id="expenses" type="number" min="0" step="0.01" value="150000" inputmode="decimal">
+      <label for="credits" data-i18n="credits">Creditable income tax withheld (BIR Form 2307, etc.) (₱)</label>
+      <input id="credits" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+      <p class="field-help" data-i18n="creditsHelp">Enter actual creditable income tax shown on valid certificates. Do not include VAT or platform-fee deductions unless they are confirmed income-tax credits.</p>
+
+      <div class="section-heading subsection"><div><span class="step">03</span><h2 data-i18n="platformTax">Marketplace withholding</h2></div></div>
+      <label for="remittance" data-i18n="remittance">Annual qualifying gross remittances from marketplace (₱)</label>
+      <input id="remittance" type="number" min="0" step="0.01" value="600000" inputmode="decimal">
+      <label class="checkline"><input id="declaration" type="checkbox"><span data-i18n="declaration">I submitted a BIR-received sworn declaration for the ₱500,000 threshold (seller rules).</span></label>
+      <p class="field-help" data-i18n="remitHelp">The 1% marketplace withholding applies to one-half of covered gross remittances, subject to threshold and exemption rules. This is separate from withholding on platform service fees.</p>
+
+      <button class="button button-primary button-full" type="submit" data-i18n="calculate">Calculate estimate</button>
+      <button class="button button-quiet button-full" id="resetBtn" type="button" data-i18n="reset">Reset example</button>
+    </form>
+
+    <section class="panel results-panel" aria-live="polite">
+      <div class="section-heading"><div><span class="step">04</span><h2 data-i18n="yourEstimate">Your estimate</h2></div><span class="live-pill"><span></span><span data-i18n="estimateOnly">Estimate only</span></span></div>
+      <div class="result-primary"><span data-i18n="estimatedIncomeTax">Estimated income tax before credits</span><strong id="incomeTax">₱0.00</strong><small id="regimeLabel">Graduated rates</small></div>
+      <div class="metric-list">
+        <div class="metric"><span data-i18n="taxableIncome">Estimated taxable income</span><strong id="taxableIncome">₱0.00</strong></div>
+        <div class="metric"><span data-i18n="marketplaceWht">Estimated marketplace withholding</span><strong id="marketWht">₱0.00</strong></div>
+        <div class="metric"><span data-i18n="creditableTax">Creditable income tax entered</span><strong id="creditsOut">₱0.00</strong></div>
+        <div class="metric"><span data-i18n="balance">Estimated income tax balance after entered credits</span><strong id="balance">₱0.00</strong></div>
+        <div class="metric"><span data-i18n="remainingWht">Marketplace withholding (not automatically final tax)</span><strong id="whtStatus">₱0.00</strong></div>
+      </div>
+      <div id="warnings" class="warnings"></div>
+      <div class="breakdown">
+        <h3 data-i18n="howCalculated">How we calculated it</h3>
+        <ol id="formulaList"></ol>
+      </div>
+      <div class="result-actions"><button class="button button-primary" type="button" onclick="window.print()" data-i18n="printReport">Print / Save as PDF</button><button class="button button-outline" type="button" id="copyBtn" data-i18n="copySummary">Copy summary</button></div>
+      <p id="copyStatus" class="field-help" aria-live="polite"></p>
+    </section>
+  </section>
+
+  <section class="panel guide-panel">
+    <div class="section-heading"><div><span class="step">05</span><h2 data-i18n="quickGuide">Quick guide & official sources</h2></div></div>
+    <div class="guide-grid">
+      <article><h3 data-i18n="affiliateGuide">Affiliates / creators</h3><p data-i18n="affiliateText">Commission income is generally business/professional income. Your correct treatment depends on registration, other income, the tax option elected, and whether any withholding is shown on valid tax documents.</p></article>
+      <article><h3 data-i18n="sellerGuide">Shop sellers</h3><p data-i18n="sellerText">RR 16-2023 provides 1% creditable withholding on one-half of covered marketplace gross remittances, subject to the ₱500,000 rules and exemptions. It does not replace the annual income tax calculation.</p></article>
+      <article><h3 data-i18n="businessTaxGuide">Percentage tax / VAT</h3><p data-i18n="businessTaxText">Business tax treatment is separate from income tax. VAT status and the applicable threshold should be verified against current BIR guidance; this starter does not calculate VAT or percentage tax.</p></article>
+    </div>
+    <h3 data-i18n="sources">Official references</h3>
+    <ul class="source-list">
+      <li><a href="https://bir-cdn.bir.gov.ph/BIR/pdf/RR%20No.%2016-2023%203.pdf" target="_blank" rel="noopener">BIR Revenue Regulations No. 16-2023</a> — marketplace withholding rules.</li>
+      <li><a href="https://bir-cdn.bir.gov.ph/BIR/pdf/RMC%20No.%208-2024.pdf" target="_blank" rel="noopener">BIR Revenue Memorandum Circular No. 8-2024</a> — ₱500,000 threshold and sworn declaration guidance.</li>
+      <li><a href="https://efps.bir.gov.ph/efps-war/EFPSWeb_war/forms2018Version/1701Q/1701q_v3_02.xhtml" target="_blank" rel="noopener">BIR Form 1701Q tax-rate table</a> — graduated individual income tax rates effective 2023 onwards.</li>
+      <li><a href="https://www.bir.gov.ph/tax-info-details" target="_blank" rel="noopener">BIR Tax Information</a> — general income tax, percentage tax and VAT information.</li>
+      <li><a href="https://seller-ph.tiktok.com/university/essay?default_language=en&knowledge_id=5536537333270273" target="_blank" rel="noopener">TikTok Shop Philippines: Withholding Tax for E-Marketplace Sellers</a> — seller-facing explanation and gross remittance formula.</li>
+      <li><a href="https://seller-ph.tiktok.com/university/essay?knowledge_id=842240898205457&lang=en" target="_blank" rel="noopener">TikTok Shop Philippines: Tax Information for Creators</a> — creator tax information submission.</li>
+    </ul>
+    <div class="disclaimer"><strong data-i18n="disclaimerTitle">Disclaimer</strong><p data-i18n="disclaimerText">This is an educational estimator, not tax, legal, or accounting advice and not a BIR product. It uses simplified assumptions and may not cover mixed-income taxpayers, corporations, special tax incentives, nonresident taxpayers, VAT, percentage tax, local taxes, penalties, or all credits/deductions. Confirm your tax regime and current obligations with the BIR or a qualified Philippine tax professional before filing or paying.</p></div>
+  </section>
+  <footer><span>CreatorTax PH · Community starter project</span><span data-i18n="footer">No account needed. Calculations run in your browser.</span></footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
