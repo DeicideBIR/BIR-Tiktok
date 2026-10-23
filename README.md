@@ -1,50 +1,48 @@
 # CreatorTax PH — GitHub Pages starter
 
-A static, bilingual (English/Filipino) educational tax estimator for Philippine TikTok affiliates and TikTok Shop sellers. It uses plain HTML, CSS, and JavaScript. No backend, account, database, or API key is needed.
+A static, bilingual (English/Filipino) educational tax estimator for Philippine TikTok affiliates and TikTok Shop sellers. Built with plain HTML, CSS, and JavaScript; no backend, account, database, or API key is needed.
 
 ## Files
-
-- `index.html` — page content and source links
+- `index.html` — page content, inputs, and source links
 - `styles.css` — responsive layout and print styles
-- `app.js` — calculations, bilingual labels, warnings, and copyable report
+- `app.js` — bilingual labels, estimates, warnings, and copyable report
 
 ## Run locally
+Open `index.html` in a modern browser. No build step is needed.
 
-Open `index.html` in a modern browser. The calculator works without a build step. Google Fonts are optional; the page falls back to system fonts if offline.
-
-## Publish using GitHub Pages
-
-1. Sign in to GitHub and create a new repository, for example `creator-tax-ph`.
+## Publish with GitHub Pages
+1. Create a GitHub repository (for example, `creator-tax-ph`).
 2. Upload `index.html`, `styles.css`, `app.js`, and `README.md` to the repository root.
-3. Open **Settings → Pages**.
-4. Under **Build and deployment**, select **Deploy from a branch**.
-5. Choose the `main` branch and `/ (root)` folder, then click **Save**.
-6. Wait for GitHub Pages to publish the site. The public address will be shown in Settings → Pages.
-7. After edits, commit changes to the selected branch; Pages will redeploy automatically.
+3. Go to **Settings → Pages**.
+4. Choose **Deploy from a branch**, select `main` and `/ (root)`, then save.
+5. Wait for the published address to appear in Settings → Pages.
 
-For a custom domain, configure it in Settings → Pages and follow GitHub's DNS instructions.
+## What this version separates
+- Affiliate commissions actually earned versus seller sales. Affiliate sales attributed to a creator are not treated as the creator's income.
+- Seller sales before returns/allowances/discounts, then net seller sales.
+- Itemized deductions versus the 40% Optional Standard Deduction (OSD). The calculator does not combine these methods.
+- Actual seller marketplace withholding entered from records versus an illustrative withholding calculation. Only the actual withholding entered is counted among tax credits.
+- Other creditable income tax entered from valid certificates.
 
-## Tax logic and important limitations
+## Calculation assumptions and limitations
+This is **not a production tax engine** and has not been certified by the BIR or a Philippine CPA. It estimates individual business income tax only.
 
-This is a starter estimator, not a production tax engine. The calculation assumes a simplified individual business-income case:
+- **Graduated income tax rates** use the individual rates effective 1 January 2023 onwards: 0% up to ₱250,000; 15% on the excess over ₱250,000 up to ₱400,000; then 20%, 25%, 30%, and 35% brackets.
+- **Itemized method:** the estimate subtracts entered seller cost of goods sold and other entered allowable expenses from total business receipts. Only legally deductible, documented expenses should be entered.
+- **OSD method:** the estimate uses 40% of total entered business receipts as the standard deduction. Itemized expenses and cost of sales are not subtracted again.
+- **8% option:** the estimate applies 8% to gross business receipts above ₱250,000 for a user who selects business-only income, and to gross business receipts without that ₱250,000 reduction when mixed income is selected. The app cannot verify individual eligibility, timely election, registration, the correct base for every income type, or special cases. It shows warnings; mixed-income results remain incomplete because salary tax is not combined.
+- **Marketplace withholding:** the illustrative figure is 1% × one-half of the gross remittances the user confirms are subject to the seller rule. It does not decide whether the ₱500,000 prior-year/current-year threshold, sworn declaration, exemption, or platform conditions are met. The illustrative amount is not automatically counted as a tax credit. Enter the actual amount withheld from seller records/certificates in the separate field.
+- The calculator does not calculate VAT, percentage tax, compensation tax, filing obligations/deadlines, local taxes, penalties, carryovers, corporate tax, nonresident tax, or every credit and deduction. It does not determine whether any specific TikTok payment is subject to a particular withholding treatment.
+- An estimated balance is not a final amount payable. Excess entered credits are displayed as a comparison only, not a promise of refund or carryover.
 
-- **Graduated rates** use the individual income tax brackets effective from 1 January 2023 onward: 0% up to ₱250,000; 15% on the excess over ₱250,000 up to ₱400,000; then 20%, 25%, 30%, and 35% brackets.
-- **8% option** is modeled as 8% of gross receipts above ₱250,000 for a simplified qualified individual with purely business/professional income. It is not available to all taxpayers. Mixed-income cases, VAT registration, eligibility, election timing, and special circumstances need separate treatment. This implementation shows warnings but cannot determine eligibility.
-- **Marketplace withholding** is shown separately as 1% × 50% × entered qualifying gross remittances. Actual application depends on RR 16-2023, threshold conditions, the sworn declaration, exemption documentation, and the marketplace's definition of gross remittances. The checkbox records a user input but does not override threshold checks or determine eligibility.
-- The estimate does **not** calculate VAT, percentage tax, local taxes, penalties, corporate tax, compensation tax, mixed-income combined tax, special tax regimes, deductions that require detailed validation, or every credit/payment.
-- Withholding is not automatically the final tax. Only enter creditable income-tax amounts supported by the relevant BIR certificates. Marketplace withholding and platform service-fee withholding are distinct.
-
-Before public launch, have a Philippine CPA or tax lawyer review the formulas, edge cases, and all text against the latest BIR issuances. Add a visible version/date for the tax logic and an update process whenever tax rules change.
+Before using this publicly for tax decisions, have a Philippine CPA or tax professional review the formulas and wording against the latest rules. Tax laws and platform practices can change.
 
 ## Official reference links
-
-- BIR Revenue Regulations No. 16-2023: https://bir-cdn.bir.gov.ph/BIR/pdf/RR%20No.%2016-2023%203.pdf
-- BIR Revenue Memorandum Circular No. 8-2024: https://bir-cdn.bir.gov.ph/BIR/pdf/RMC%20No.%208-2024.pdf
+- BIR Revenue Regulations No. 16-2023: https://bir-cdn.bir.gov.ph/BIR/pdf/RR%2016-2023.pdf
+- BIR Revenue Memorandum Circular No. 8-2024: https://bir-cdn.bir.gov.ph/BIR/pdf/RMC%20No.%208-2024%20%281%29.pdf
 - BIR Form 1701Q rate table: https://efps.bir.gov.ph/efps-war/EFPSWeb_war/forms2018Version/1701Q/1701q_v3_02.xhtml
-- BIR Tax Information: https://www.bir.gov.ph/tax-info-details
+- BIR forms and guidance: https://www.bir.gov.ph/bir-forms
 - TikTok Shop Philippines seller withholding guide: https://seller-ph.tiktok.com/university/essay?default_language=en&knowledge_id=5536537333270273
-- TikTok Shop Philippines creator tax information: https://seller-ph.tiktok.com/university/essay?knowledge_id=842240898205457&lang=en
 
 ## Privacy
-
-The calculator does not transmit form values to a server. Data is calculated in the visitor's browser and is not saved after closing/reloading the page. The copy-summary feature only copies a report after the visitor clicks it.
+All calculations run in the visitor's browser. The form values are not transmitted to a server or saved by this website. The copy-summary feature copies data only after the visitor clicks it.
